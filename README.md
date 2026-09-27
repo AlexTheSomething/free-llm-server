@@ -1,6 +1,6 @@
 # free-llm-server
 
-One command to run **your own OpenAI-compatible LLM server on Kaggle's free GPUs** and wire it to Hermes, VS Code, or any OpenAI-speaking client. No API keys to pay for, no VPS, no caps except Kaggle's ~30 GPU-hours/week.
+**One file** (`fls.py`) that runs **your own OpenAI-compatible LLM server on Kaggle's free GPUs** and wire it to Hermes, VS Code, or any OpenAI-speaking client. No API keys to pay for, no VPS, no caps except Kaggle's ~30 GPU-hours/week.
 
 ```
 ┌─ fls (free-llm-server) ──────────────────────┐
@@ -14,21 +14,23 @@ One command to run **your own OpenAI-compatible LLM server on Kaggle's free GPUs
 ## Install
 
 ```bash
-pip install -e .        # from a clone of this repo
-fls                     # interactive menu, or use subcommands
+curl -O https://raw.githubusercontent.com/AlexTheSomething/free-llm-server/main/fls.py
+python fls.py          # interactive menu, or use subcommands
 ```
+
+(No dependencies beyond Python 3.10+; the Kaggle CLI is installed by `setup` for you.)
 
 ## How it works
 
 ```
-fls start
-  → renders kernel/kaggle_kernel.py with your settings
+python fls.py start
+  → renders the embedded Kaggle kernel with your settings
   → pushes it as a PRIVATE Kaggle kernel (GPU T4×2, internet on)
   → kernel: installs Ollama, imports your GGUF, starts an auth proxy
     on :8080 + a Cloudflare quick tunnel, publishes the URL to ntfy
   → fls picks the URL up, wires Hermes (or prints client config),
     tracks quota
-fls stop
+python fls.py stop
   → POSTs /admin/shutdown through the live tunnel (or tells you where to click)
 ```
 
@@ -49,6 +51,8 @@ fls stop
 | `fls swap` | point at a different HF GGUF repo/file for the next session |
 | `fls fallback` | flip Hermes back to its previous model |
 | `fls client-config` | paste-ready config for any OpenAI-compatible app |
+
+(`fls` = `python fls.py`; alias it if you like.)
 
 ## Known limits (honest)
 
