@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+*.egg-info/
+build/
+dist/
+.venv/
+# never commit real tokens
+kaggle.json
+*.log
+state.json
